@@ -2,6 +2,13 @@
 #coding=utf-8
 
 import logging; logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+logger.setLevel(level = logging.INFO)
+handler = logging.FileHandler("log.txt")
+handler.setLevel(logging.INFO)
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
 
 import asyncio, os, json, time
 from datetime import datetime
@@ -9,7 +16,7 @@ from datetime import datetime
 from aiohttp import web
 
 def index(request):
-	return web.Response(body='<h1>Awesome</h1>')
+	return web.Response(body=b'<h1>Awesome</h1>', content_type='text/html')
 
 @asyncio.coroutine
 def init(loop):
